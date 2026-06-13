@@ -13,7 +13,47 @@
     padding:0;
     box-sizing:border-box;
 }
+<audio id="audio"></audio>
 
+<script>
+
+const canciones = [
+    "tema1.mp3",
+    "tema2.mp3",
+    "tema3.mp3"
+];
+
+let indice = 0;
+
+const reproductor = document.getElementById("audio");
+
+function reproducirPlaylist(){
+
+    reproductor.src = canciones[indice];
+    reproductor.play();
+
+}
+
+reproductor.addEventListener("ended", () => {
+
+    indice++;
+
+    if(indice < canciones.length){
+
+        reproductor.src = canciones[indice];
+        reproductor.play();
+
+    }
+
+});
+
+window.addEventListener("click", () => {
+
+    reproducirPlaylist();
+
+}, { once:true });
+
+</script>
 body{
     width:100vw;
     height:100vh;
