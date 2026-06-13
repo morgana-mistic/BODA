@@ -30,24 +30,24 @@ img{
     object-fit:contain;
 }
 
-#entrar{
+#menu{
     position:fixed;
     bottom:40px;
     left:50%;
     transform:translateX(-50%);
 
-    padding:15px 35px;
+    display:flex;
+    gap:20px;
+}
 
+#menu button{
     border:none;
     border-radius:50px;
-
-    background:white;
-
-    font-size:1.2rem;
-
+    padding:18px 30px;
+    font-size:1.1rem;
     cursor:pointer;
-
-    box-shadow:0 4px 15px rgba(0,0,0,0.3);
+    background:white;
+    box-shadow:0 4px 15px rgba(0,0,0,0.25);
 }
 
 </style>
@@ -58,9 +58,19 @@ img{
 
 <img src="pareja.png" alt="Nuestra Boda">
 
-<button id="entrar" style="display:none;">
-🎵 Activar Música
+<div id="menu">
+
+```
+<button id="musica">
+    🎵 Nuestra Música
 </button>
+
+<button id="fotos">
+    📷 Nuestras Fotos
+</button>
+```
+
+</div>
 
 <audio id="audio"></audio>
 
@@ -78,12 +88,11 @@ const reproductor = document.getElementById("audio");
 
 function reproducirPlaylist(){
 
+    document.getElementById("menu").style.display = "none";
+
     reproductor.src = canciones[indice];
     reproductor.play();
 
-    window.addEventListener("load", () => {
-    reproducirPlaylist();
-});
 }
 
 reproductor.addEventListener("ended", () => {
@@ -94,10 +103,12 @@ reproductor.addEventListener("ended", () => {
 
         reproductor.src = canciones[indice];
         reproductor.play();
+
     }
+
 });
 
-document.getElementById("entrar")
+document.getElementById("musica")
 .addEventListener("click", reproducirPlaylist);
 
 </script>
