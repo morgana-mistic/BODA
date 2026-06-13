@@ -81,7 +81,9 @@ function reproducirPlaylist(){
     reproductor.src = canciones[indice];
     reproductor.play();
 
-    document.getElementById("entrar").style.display = "none";
+    window.addEventListener("load", () => {
+    reproducirPlaylist();
+});
 }
 
 reproductor.addEventListener("ended", () => {
