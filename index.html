@@ -17,18 +17,21 @@
 body{
     width:100vw;
     height:100vh;
-    background:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
     overflow:hidden;
+    font-family:Arial, sans-serif;
 }
 
+/* FONDO */
+
 #portada{
-    max-width:100%;
-    max-height:100%;
-    object-fit:contain;
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
+
+/* BOTONES PRINCIPALES */
 
 #menu{
     position:fixed;
@@ -37,95 +40,130 @@ body{
     transform:translateX(-50%);
     display:flex;
     gap:20px;
-    z-index:10;
+    z-index:20;
 }
 
 #menu button{
     border:none;
-    border-radius:50px;
+    border-radius:40px;
     padding:18px 30px;
     font-size:1.1rem;
     cursor:pointer;
-    background:white;
-    box-shadow:0 4px 15px rgba(0,0,0,0.25);
+
+    background:rgba(255,248,235,0.92);
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
 }
 
-#galeria{
+/* VENTANAS */
+
+.modal{
     position:fixed;
     inset:0;
-    background:white;
+
     display:none;
-    overflow-y:auto;
+
+    justify-content:center;
+    align-items:center;
+
+    background:rgba(0,0,0,.20);
+
     z-index:100;
-    padding:20px;
 }
 
-#cerrar{
-    position:sticky;
-    top:10px;
-    float:right;
-    border:none;
-    border-radius:50px;
-    padding:12px 20px;
-    cursor:pointer;
-    font-size:1rem;
-}
+/* TARJETA */
 
-.foto{
-    width:100%;
-    max-width:900px;
-    display:block;
-    margin:20px auto;
-    border-radius:12px;
-}
+.tarjeta{
 
-/* PANEL MUSICA */
+    width:min(92vw,700px);
+    max-height:85vh;
 
-#panelMusica{
-    position:fixed;
-    inset:0;
-    background:rgba(255,255,255,0.96);
-    display:none;
-    z-index:200;
-    padding:30px;
     overflow:auto;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,.25);
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+
+    text-align:center;
 }
 
-#panelMusica h2{
-    text-align:center;
+/* TITULOS */
+
+.tarjeta h2{
     margin-bottom:25px;
 }
 
+/* MUSICA */
+
 .tema{
+
     width:100%;
-    max-width:500px;
-    display:block;
-    margin:10px auto;
-    padding:18px;
+
+    margin:10px 0;
+
+    padding:16px;
+
     border:none;
+
     border-radius:15px;
-    font-size:1rem;
+
     cursor:pointer;
+
+    background:rgba(255,248,235,.9);
+
+    font-size:1rem;
 }
 
 #reproduciendo{
-    text-align:center;
+
     margin:25px 0;
+
     font-weight:bold;
 }
 
+/* CONTROLES */
+
 .controles{
+
     display:flex;
+
     justify-content:center;
-    gap:15px;
+
+    gap:10px;
+
     flex-wrap:wrap;
 }
 
 .controles button{
-    padding:12px 20px;
+
     border:none;
+
     border-radius:30px;
+
+    padding:12px 20px;
+
     cursor:pointer;
+
+    background:rgba(255,248,235,.9);
+}
+
+/* GALERIA */
+
+.foto{
+
+    width:100%;
+
+    margin:15px 0;
+
+    border-radius:15px;
 }
 
 </style>
@@ -137,66 +175,84 @@ body{
 
 <div id="menu">
 
-    <button id="musica">
+    <button id="abrirMusica">
         🎵 Nuestra Música
     </button>
 
-    <button id="fotos">
+    <button id="abrirFotos">
         📷 Nuestras Fotos
     </button>
 
 </div>
 
-<div id="galeria">
+<!-- MUSICA -->
 
-    <button id="cerrar">
-        ✕ Cerrar
-    </button>
+<div class="modal" id="modalMusica">
 
-    <img class="foto" src="1.jpeg" alt="">
-    <img class="foto" src="2.jpeg" alt="">
-    <img class="foto" src="3.jpeg" alt="">
-    <img class="foto" src="4.jpeg" alt="">
-    <img class="foto" src="6.jpeg" alt="">
-    <img class="foto" src="7.jpeg" alt="">
-    <img class="foto" src="8.jpeg" alt="">
-    <img class="foto" src="10.jpeg" alt="">
+    <div class="tarjeta">
+
+        <h2>🎵 Nuestra Música</h2>
+
+        <button class="tema" onclick="reproducirTema(0)">
+            Comiéndote a besos
+        </button>
+
+        <button class="tema" onclick="reproducirTema(1)">
+            Spring 1
+        </button>
+
+        <button class="tema" onclick="reproducirTema(2)">
+            Va a ser difícil sin ti
+        </button>
+
+        <div id="reproduciendo">
+            Ningún tema seleccionado
+        </div>
+
+        <div class="controles">
+
+            <button onclick="pausar()">
+                ⏸ Pausar
+            </button>
+
+            <button onclick="reanudar()">
+                ▶ Reanudar
+            </button>
+
+            <button onclick="cerrarMusica()">
+                ✕ Cerrar
+            </button>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div id="panelMusica">
+<!-- FOTOS -->
 
-    <h2>🎵 Nuestra Música</h2>
+<div class="modal" id="modalFotos">
 
-    <button class="tema" onclick="reproducirTema(0)">
-        Comiéndote a besos
-    </button>
+    <div class="tarjeta">
 
-    <button class="tema" onclick="reproducirTema(1)">
-        Spring 1
-    </button>
+        <h2>📷 Nuestras Fotos</h2>
 
-    <button class="tema" onclick="reproducirTema(2)">
-        Va a ser difícil sin ti
-    </button>
+        <img class="foto" src="1.jpeg">
+        <img class="foto" src="2.jpeg">
+        <img class="foto" src="3.jpeg">
+        <img class="foto" src="4.jpeg">
+        <img class="foto" src="6.jpeg">
+        <img class="foto" src="7.jpeg">
+        <img class="foto" src="8.jpeg">
+        <img class="foto" src="10.jpeg">
 
-    <div id="reproduciendo">
-        Ningún tema seleccionado
-    </div>
+        <div class="controles">
 
-    <div class="controles">
+            <button onclick="cerrarFotos()">
+                ✕ Cerrar
+            </button>
 
-        <button onclick="pausar()">
-            ⏸ Pausar
-        </button>
-
-        <button onclick="reanudar()">
-            ▶ Reanudar
-        </button>
-
-        <button onclick="cerrarMusica()">
-            ✕ Cerrar
-        </button>
+        </div>
 
     </div>
 
@@ -207,15 +263,19 @@ body{
 <script>
 
 const canciones = [
+
     "comiendote a besos.mp3",
     "spring 1.mp3",
     "va a ser dificil sin ti.mp3"
+
 ];
 
 const nombres = [
+
     "Comiéndote a besos",
     "Spring 1",
     "Va a ser difícil sin ti"
+
 ];
 
 const reproductor = document.getElementById("audio");
@@ -223,51 +283,49 @@ const reproductor = document.getElementById("audio");
 function reproducirTema(indice){
 
     reproductor.src = canciones[indice];
+
     reproductor.play();
 
     document.getElementById("reproduciendo").innerHTML =
-    "🎵 Reproduciendo:<br>" + nombres[indice];
-
+    "🎵 Reproduciendo:<br><br>" + nombres[indice];
 }
 
 function pausar(){
+
     reproductor.pause();
 }
 
 function reanudar(){
+
     reproductor.play();
 }
 
+document.getElementById("abrirMusica")
+.addEventListener("click", ()=>{
+
+    document.getElementById("modalMusica").style.display="flex";
+});
+
+document.getElementById("abrirFotos")
+.addEventListener("click", ()=>{
+
+    document.getElementById("modalFotos").style.display="flex";
+});
+
 function cerrarMusica(){
-    document.getElementById("panelMusica").style.display="none";
+
+    document.getElementById("modalMusica").style.display="none";
 }
 
-document.getElementById("musica")
-.addEventListener("click", () => {
+function cerrarFotos(){
 
-    document.getElementById("panelMusica").style.display="block";
-
-});
-
-document.getElementById("fotos")
-.addEventListener("click", () => {
-
-    document.getElementById("galeria").style.display="block";
-
-});
-
-document.getElementById("cerrar")
-.addEventListener("click", () => {
-
-    document.getElementById("galeria").style.display="none";
-
-});
+    document.getElementById("modalFotos").style.display="none";
+}
 
 </script>
 
 </body>
 </html>
-
 
 
 
