@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -80,6 +79,55 @@ body{
     border-radius:12px;
 }
 
+/* PANEL MUSICA */
+
+#panelMusica{
+    position:fixed;
+    inset:0;
+    background:rgba(255,255,255,0.96);
+    display:none;
+    z-index:200;
+    padding:30px;
+    overflow:auto;
+}
+
+#panelMusica h2{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.tema{
+    width:100%;
+    max-width:500px;
+    display:block;
+    margin:10px auto;
+    padding:18px;
+    border:none;
+    border-radius:15px;
+    font-size:1rem;
+    cursor:pointer;
+}
+
+#reproduciendo{
+    text-align:center;
+    margin:25px 0;
+    font-weight:bold;
+}
+
+.controles{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.controles button{
+    padding:12px 20px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+}
+
 </style>
 </head>
 
@@ -116,56 +164,102 @@ body{
 
 </div>
 
+<div id="panelMusica">
+
+    <h2>🎵 Nuestra Música</h2>
+
+    <button class="tema" onclick="reproducirTema(0)">
+        Comiéndote a besos
+    </button>
+
+    <button class="tema" onclick="reproducirTema(1)">
+        Spring 1
+    </button>
+
+    <button class="tema" onclick="reproducirTema(2)">
+        Va a ser difícil sin ti
+    </button>
+
+    <div id="reproduciendo">
+        Ningún tema seleccionado
+    </div>
+
+    <div class="controles">
+
+        <button onclick="pausar()">
+            ⏸ Pausar
+        </button>
+
+        <button onclick="reanudar()">
+            ▶ Reanudar
+        </button>
+
+        <button onclick="cerrarMusica()">
+            ✕ Cerrar
+        </button>
+
+    </div>
+
+</div>
+
 <audio id="audio"></audio>
 
 <script>
 
 const canciones = [
-"spring 1.mp3",
-"comiendote a besos.mp3",
-"va a ser dificil sin ti.mp3"
+    "comiendote a besos.mp3",
+    "spring 1.mp3",
+    "va a ser dificil sin ti.mp3"
 ];
 
-let indice = 0;
+const nombres = [
+    "Comiéndote a besos",
+    "Spring 1",
+    "Va a ser difícil sin ti"
+];
 
 const reproductor = document.getElementById("audio");
 
-function reproducirPlaylist(){
-
-    indice = 0;
+function reproducirTema(indice){
 
     reproductor.src = canciones[indice];
     reproductor.play();
 
+    document.getElementById("reproduciendo").innerHTML =
+    "🎵 Reproduciendo:<br>" + nombres[indice];
+
 }
 
-reproductor.addEventListener("ended", () => {
+function pausar(){
+    reproductor.pause();
+}
 
-    indice++;
+function reanudar(){
+    reproductor.play();
+}
 
-    if(indice < canciones.length){
-
-        reproductor.src = canciones[indice];
-        reproductor.play();
-
-    }
-
-});
+function cerrarMusica(){
+    document.getElementById("panelMusica").style.display="none";
+}
 
 document.getElementById("musica")
-.addEventListener("click", reproducirPlaylist);
+.addEventListener("click", () => {
+
+    document.getElementById("panelMusica").style.display="block";
+
+});
 
 document.getElementById("fotos")
 .addEventListener("click", () => {
 
-    document.getElementById("galeria").style.display = "block";
+    document.getElementById("galeria").style.display="block";
 
 });
 
 document.getElementById("cerrar")
 .addEventListener("click", () => {
 
-    document.getElementById("galeria").style.display = "none";
+    document.getElementById("galeria").style.display="none";
 
 });
 
@@ -173,6 +267,9 @@ document.getElementById("cerrar")
 
 </body>
 </html>
+
+
+
 
 
 
